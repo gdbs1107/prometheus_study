@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: springAcuatortest
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "prometheus"
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+

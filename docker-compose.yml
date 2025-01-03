@@ -1,0 +1,49 @@
+version: "3.7"
+
+services:
+
+  spring-server:
+    image: springacuatortest-spring-app
+    container_name: spring-server
+    ports:
+      - "8080:8080" # 스프링 서버 포트
+    volumes:
+      - ./spring/config:/config # 필요하면 설정 파일 경로 매핑
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    restart: always
+    networks:
+      - goodjob-network
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - /Users/jeonjaeyeon/monitor/prometheus/config/:/etc/prometheus/ # 올바른 경로 매핑
+      - /Users/jeonjaeyeon/monitor/prometheus/prometheus-volume:/prometheus
+    command:
+      - '--web.enable-lifecycle'
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    restart: always
+    networks:
+      - goodjob-network
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    depends_on:
+      - prometheus
+    ports:
+      - "3000:3000"
+    volumes:
+      - /Users/jeonjaeyeon/monitor/grafana/config/:/etc/grafana/ # 올바른 경로 매핑
+      - /Users/jeonjaeyeon/monitor/grafana/data:/var/lib/grafana # Grafana 데이터 디렉토리
+    restart: always
+    networks:
+      - goodjob-network
+
+networks:
+  goodjob-network:
+    driver: bridge

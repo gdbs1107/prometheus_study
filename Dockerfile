@@ -1,5 +1,7 @@
 FROM openjdk:17-jdk-slim
 
-COPY build/libs/project-0.0.1-SNAPSHOT.jar app.jar
+WORKDIR /app
 
-CMD ["java", "-Dspring.profiles.active=dev", "-jar", "app.jar"]
+COPY build/libs/springAcuatortest-0.0.1-SNAPSHOT.jar app.jar
+
+CMD ["java", "-jar", "app.jar"]
