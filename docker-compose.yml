@@ -21,8 +21,8 @@ services:
     ports:
       - "9090:9090"
     volumes:
-      - /Users/jeonjaeyeon/monitor/prometheus/config/:/etc/prometheus/ # 올바른 경로 매핑
-      - /Users/jeonjaeyeon/monitor/prometheus/prometheus-volume:/prometheus
+      - /home/monitor/prometheus/config/:/etc/prometheus/ # 올바른 경로 매핑
+      - /home/monitor/prometheus/prometheus-volume:/prometheus
     command:
       - '--web.enable-lifecycle'
       - '--config.file=/etc/prometheus/prometheus.yml'
@@ -38,8 +38,8 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - /Users/jeonjaeyeon/monitor/grafana/config/:/etc/grafana/ # 올바른 경로 매핑
-      - /Users/jeonjaeyeon/monitor/grafana/data:/var/lib/grafana # Grafana 데이터 디렉토리
+      - /home/monitor/grafana/config/:/etc/grafana/ # 올바른 경로 매핑
+      - /home/monitor/grafana/data:/var/lib/grafana # Grafana 데이터 디렉토리
     restart: always
     networks:
       - goodjob-network
